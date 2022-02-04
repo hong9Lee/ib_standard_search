@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "/Users/ihong-gyu/Desktop/jeju/jejuSearch/logs/.15ea305bd8176c6c1af82d2f1d89eb55fbc6e065-audit.json",
+    "files": [
+        {
+            "date": 1643940206393,
+            "name": "/Users/ihong-gyu/Desktop/jeju/jejuSearch/logs/STANDARD_SEARCH-2022-02-04.log",
+            "hash": "d2638d29820ad04aa2957aeeb3fb0a44"
+        }
+    ]
+}

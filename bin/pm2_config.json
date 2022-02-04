@@ -1,0 +1,12 @@
+{
+    apps: [{
+	name: "standard_search",
+	script: "bin/bin.js",
+	restart_delay: 1000,
+	env_production: {
+	    NODE_ENV: "production"
+	},
+	instances: 2,
+	exec_mode: 'cluster'
+    }]
+}

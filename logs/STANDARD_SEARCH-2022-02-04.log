@@ -1,0 +1,20 @@
+2022-02-04 11:05:36.814 [INFO] - *************** config *****************
+2022-02-04 11:05:36.815 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 11:05:36.815 [INFO] - * app_port : 19200
+2022-02-04 11:05:36.815 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 11:05:36.815 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 11:05:36.816 [INFO] - ****************************************
+2022-02-04 11:06:33.264 [INFO] - *************** config *****************
+2022-02-04 11:06:33.266 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 11:06:33.266 [INFO] - * app_port : 19200
+2022-02-04 11:06:33.266 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 11:06:33.266 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 11:06:33.266 [INFO] - ****************************************
+2022-02-04 11:06:57.888 [INFO] - dd
+2022-02-04 11:06:57.889 [ERROR] - mainService err | TypeError: QUERY_BODY[indexNm] is not a function
+    at Object.msearchBody (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/util/util.js:82:35)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/main/mainService.js:19:112
+    at Array.flatMap (<anonymous>)
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/main/mainService.js:19:45)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/main/mainApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)

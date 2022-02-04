@@ -1,0 +1,153 @@
+제주 화장품 인증관리)
+1. 타 시스템에 있는 '제주 화장품 인증관리' 데이터는 어떤 방식으로 조회해 볼 수 있는지 문의 드립니다.
+	=> 제주 화장품 인증 관리의 경우, 타 시스템에 API를 붙여서 호출하는 방식이라서 포스트맨 같은 API 툴을
+	이용해서 호출하는 방법 말고는 조회할 수 있는 방법이 없습니다. 해당 호출 API 주소 및 파라미터는 아래와 같습니다.
+
+		API 주소 - http://www.jejucosmetics.or.kr/wkit/stats/search.json
+		POST 방식
+
+		파라미터(JSON)
+		{
+			"searchType": "cos",			-- 검색 타입
+			"searchText": "화이트닝 캡슐",	-- 검색어
+			"start": 0,             		-- 페이지 시작점
+			"length": 12,					-- 데이터 표출 건수
+			"pagingYn": true        		-- 페이징 처리 유무
+		}
+
+		※검색 타입의 경우
+			all - 상품명, 기업명, 인증번호 검색
+			cos - 상품명
+			com - 기업명
+			cert - 인증번호
+
+조제 관리사 매칭)
+2. 조제관리사 매칭 기대효능 컬럼 -> 전달 받은 쿼리상에는 " t_pm_recipe_detail 테이블의
+BENEFFI_CD와 t_com_cd_dtl 테이블의 CD_DTL_ID를 조인해서 추출" 하는 부분이 없어 쿼리를 재 요청 드립니다.
+	=>
+			select
+			distinct
+			tpco.ORDER_CD
+			, tpco.RCP_CD
+			, tpr.rcp_nm
+			, tcu.USER_NM
+			, tpr.REG_DTM
+			, tpco.IMAGE_FILE_ID
+			, tpco.ORDER_DT
+			, tpr.SHAPE -- 제형
+			, group_concat(tccd.CD_DTL_NM) as benefit -- 기대효능
+		from t_pm_cosmetic_order tpco
+		left join t_pm_recipe tpr on tpr.RCP_CD = tpco.RCP_CD
+		left join t_com_user tcu on tcu.USER_ID = tpr.REG_ID
+		left join t_pm_recipe_detail tprd on tprd.RCP_CD = tpco.RCP_CD
+		left join t_com_cd_dtl tccd on tccd.CD_DTL_ID = tprd.BENEFFI_CD
+		WHERE 1=1
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(makerNmLike)" >
+			<![CDATA[
+				AND tcu.USER_NM LIKE CONCAT('%', #{makerNmLike}, '%')
+			]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(recipeNmLike)" >
+			<![CDATA[
+				AND tpr.rcp_nm LIKE CONCAT('%', #{recipeNmLike}, '%')
+			]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(startRegDt) and @kr.co.ucsit.framework.util.StringUtil@isEmpty(endRegDt)" >
+			<![CDATA[
+				AND tpr.REG_DTM >= #{startRegDt}
+			]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isEmpty(startRegDt) and @kr.co.ucsit.framework.util.StringUtil@isNotEmpty(endRegDt)" >
+			<![CDATA[
+				AND tpr.REG_DTM <= #{endRegDt}
+			]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(startRegDt) and @kr.co.ucsit.framework.util.StringUtil@isNotEmpty(endRegDt)" >
+			<![CDATA[
+				AND tpr.REG_DTM between #{startRegDt} and #{endRegDt}
+			]]>
+		</if>
+		order by tpco.ORDER_CD  desc
+		<if test="pagingYn == true" >
+			<![CDATA[
+				LIMIT #{start}, #{length}
+			]]>
+		</if>
+		group by tpco.ORDER_CD ;
+
+3. IMAGE_FILE_ID 컬럼을 이용한 이미지 표출 소스를 요청 드립니다.
+	=> 이미지 표출의 경우, 아래 소스를 이용하여 이미지 표출 하고 있습니다.
+		<img src='/file/image.do?itemId=<c:out value="${data.imageFileId eq null ?  '' : data.imageFileId}"/>&thumnail=true' class='img-rounded img-responsive' style='width:200px;height:105px;margin-left:42px;'>
+
+전체)
+4. 통합검색 페이지에서 상세페이지로 넘어갈 때 사용할 pk 값은 해당 테이블의 pk 값을 사용하면 될 지 문의 드립니다.
+	=> 네 각 테이블의 PK 값으로 조회하여 진입 하시면 됩니다.
+
+5. 현재 퍼블리싱 상에서 통합검색에 필요한 컬럼들만 식별 가능한 상태 입니다.
+예를들어 "화장품 소재 정보 관리"의 "화장품 원료, 제1공장 원료" 카테고리는 어떤 필드들을 화면에 표출 하는지 파악하기가 어렵습니다.
+따라서, 각 카테고리 별 통합 및 상세 검색 페이지에서 표출될 필드들만 도출할 수 있는 쿼리를 요청 드립니다.
+	=> 제 1공장 원료의 경우, 상세정보 보기 화면이 따로 존재 하지 않아서 검색 결과 리스트만 표출 되면 될것 같습니다.
+
+		◆화장품 원료 통합검색
+					SELECT
+					distinct
+					tcp.CATEGORY,
+					tcp.FUNC,
+					tcp.COSMET_NM,
+					tcp.SCNTNM,
+					first_value(tcpi.COS_IMG_ID) over (partition by tcpi.COSMET_ID) IMG_ID,
+					first_value(tcpi.IMG) over (partition by tcpi.COSMET_ID) IMG_NM,
+					first_value(tcpi.IMG_PATH) over (partition by tcpi.COSMET_ID) IMG_PATH
+				FROM
+					t_cmi_cosmetics tcp
+				left join
+					t_cmi_cosmet_img tcpi on tcpi.COSMET_ID = tcp.COSMET_ID
+				WHERE
+					tcp.USE_YN != "N"
+			    ORDER BY COSMET_ID DESC
+
+		◆화장품 원료 상세정보		※상세정보의 경우, 화장품 소재정보관리 -> 화장품 원료 -> 상세보기 화면과 동일합니다.
+			SELECT
+                distinct
+                tcp.COSMET_ID,
+                tcp.BIOSP_ID,
+                tcp.MATE_NUM,
+                tcp.CATEGORY,
+                tcp.CATEGORY_ENG,
+                tcp.FUNC,
+                tcp.FUNC_ENG,
+                tcp.ORG,
+                tcp.ORG_ENG,
+                tcp.PART,
+                tcp.PART_ENG,
+                tcp.TRADE,
+                tcp.TRADE_M,
+                tcp.USE_YN,
+                tcp.COSMET_NM,
+                tcp.SCNTNM,
+                tcp.SCNTNM_B1,
+                tcp.SCNTNM_B2,
+                tcp.SCNTNM_I1,
+                tcp.SCNTNM_I2,
+                tcp.DIRECT_INPUT_YN,
+                first_value(tcpi.COS_IMG_ID) over (partition by tcpi.COSMET_ID) IMG_ID,
+                first_value(tcpi.IMG) over (partition by tcpi.COSMET_ID) IMG_NM,
+                first_value(tcpi.IMG_PATH) over (partition by tcpi.COSMET_ID) IMG_PATH
+            FROM
+                t_cmi_cosmetics tcp
+            left join
+                t_cmi_cosmet_img tcpi on tcpi.COSMET_ID = tcp.COSMET_ID
+            WHERE
+                tcp.COSMET_ID = #{cosmetId}      -- 소재 아이디
+
+
+		◆제1공장 원료 통합검색   ※화장품 소재 정보 관리 -> 제1공장 원료 화면과 동일 합니다.
+			SELECT
+				mtr_nm,    	-- 원료명
+				inci,		-- INCI
+				casno		-- CasNo
+			FROM t_bh_material
+			WHERE deleteNo is null
+
+
+

@@ -1,0 +1,426 @@
+
+220121 제주플랫폼 통합검색 쿼리 관련
+
+◆플랫폼서비스 - 공지사항, 자료실, FAQ, QNA 조회 쿼리
+
+	<select id="selectList" parameterType="bodArtiSearch" resultType="bodArti">
+	<![CDATA[
+		SELECT * FROM
+		(SELECT	
+			ARTI_ID,
+			BOD_ID,
+			ARTI_GRP,
+			DEPTH,
+			TITLE,
+			CONT,
+			SCRT_YN,
+			NOTI_YN,
+			FILE_ID,
+			(SELECT COUNT(ITEM_ID) FROM T_COM_FILE_ITEM WHERE T_COM_FILE_ITEM.FILE_ID = T_CMS_BOD_ARTI.FILE_ID) AS FILE_CNT,
+			IFNULL((SELECT USER_NM FROM T_COM_USER WHERE T_COM_USER.USER_ID = T_CMS_BOD_ARTI.REG_ID), "") AS REG_NAME,
+			(select COUNT(*) from t_cms_bod_arti sub where sub.ARTI_GRP=T_CMS_BOD_ARTI.ARTI_GRP and sub.`DEPTH` > 1 and sub.DEL_DTM is null) replyCnt,
+		    FILE_PRVIEW,
+			HIT,
+			REG_ID,
+			REG_DTM,
+			UPD_ID,
+			UPD_DTM,
+			DEL_ID,
+			DEL_DTM,
+			(SELECT COUNT(CMNT_ID) FROM T_CMS_BOD_CMNT WHERE T_CMS_BOD_CMNT.ARTI_ID = T_CMS_BOD_ARTI.ARTI_ID) AS CMNT_CNT,
+		    WRITER
+		FROM		
+			T_CMS_BOD_ARTI
+		) BOD_INFO
+		WHERE
+			BOD_INFO.DEL_DTM IS NULL
+	]]>
+		<choose>
+			<when test="bodId == 1" > -- 공지사항인 경우
+			<![CDATA[ 
+				AND BOD_INFO.BOD_ID IN (1,5,9,13,17,21,25) -- 각 시스템 공지사항 아이디
+			]]>
+			</when>
+			<when test="bodId == 2" > -- 자료실인 경우
+			<![CDATA[ 
+				AND BOD_INFO.BOD_ID IN (2,6,10,14,18,22,26) -- 각 시스템 자료실 아이디
+			]]>
+			</when>
+			<when test="bodId == 3" > -- FAQ인 경우
+			<![CDATA[ 
+				AND BOD_INFO.BOD_ID IN (3,7,11,15,19,23,27) -- 각 시스템 FAQ 아이디
+			]]>
+			</when>
+			<when test="bodId == 4" > -- QNA인 경우
+			<![CDATA[ 
+				AND BOD_INFO.BOD_ID IN (4,8,12,16,20,24,28) -- 각 시스템 QNA 아이디
+			]]>
+			</when>
+			<when test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(bodId)" >
+			<![CDATA[ 
+				AND BOD_INFO.BOD_ID = #{bodId}
+			]]>
+			</when>
+		</choose>
+		<if test="scrtYn != null" > -- 비밀글 사용 여부 체크
+		<![CDATA[ 
+			AND BOD_INFO.SCRT_YN = #{scrtYn}
+		]]>
+		</if>
+		<if test="notiYn != null" > -- 공지사항 여부
+		<![CDATA[ 
+			AND BOD_INFO.NOTI_YN = #{notiYn}
+		]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(titleLike)" > -- 제목 검색 조건
+		<![CDATA[ 
+			AND BOD_INFO.TITLE LIKE CONCAT('%', #{titleLike}, '%')
+		]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(nameLike)" > -- 작성자 검색 조건
+			<![CDATA[
+			AND BOD_INFO.REG_NAME LIKE CONCAT('%', #{nameLike}, '%')
+		]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(contLike)" > -- 내용 검색 조건
+		<![CDATA[ 
+			AND BOD_INFO.CONT LIKE CONCAT('%', #{contLike}, '%')
+		]]>
+		</if>
+		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(searchLike)" > -- 전체 검색 조건
+		<![CDATA[ 
+			AND (BOD_INFO.CONT LIKE CONCAT('%', #{searchLike}, '%') OR BOD_INFO.TITLE LIKE CONCAT('%', #{searchLike}, '%') OR BOD_INFO.REG_NAME LIKE CONCAT('%', #{searchLike}, '%'))
+		]]>
+		</if>
+		<![CDATA[ 
+			ORDER BY BOD_INFO.ARTI_GRP DESC, BOD_INFO.DEPTH
+		]]>
+		<if test="pagingYn == true" >
+		<![CDATA[ 
+			LIMIT #{start}, #{length} -- 페이지네이션 길이 설정
+		]]>
+		</if>
+	</select>
+	
+	
+	
+	
+◆화장품 소재 정보 관리 조회 쿼리
+	
+	- 화장품 원물 조회 쿼리
+		<select id="selectList" parameterType="biospSearch" resultType="biospSearch">
+        <![CDATA[
+            SELECT
+                distinct tcjb.BIOSP_ID, concat(GANG_NM_ENG, GANG_NM) as gang, concat(MOK_NM_ENG, MOK_NM) as mok, concat(GOA_NM_ENG, GOA_NM) as goa, JONG_KOR, JONG_B1, JEJU_LOCNAME, dist_addr_road, MORP_CHAR
+             , (select tcbi.BIOSP_IMG_ID from t_cmi_biosp_img tcbi where tcbi.BIOSP_ID = tcjb.BIOSP_ID limit 1) IMG_ID
+             , (select tcbi.IMG from t_cmi_biosp_img tcbi where tcbi.BIOSP_ID = tcjb.BIOSP_ID limit 1) imgNm
+             , (select tcbi.IMG_PATH from t_cmi_biosp_img tcbi where tcbi.BIOSP_ID = tcjb.BIOSP_ID limit 1) imgPath
+             ,  BIOSP_GROUP , DIRECT_INPUT_YN
+            ,SOK_I1
+            ,SOK_B1
+            ,SOK_I2
+            ,SOK_B2
+            ,SOK_KOR
+            ,SOK_ADD_INFO
+            ,JONG_I1
+            ,JONG_B1
+            ,JONG_I2
+            ,JONG_B2
+            ,JONG_KOR
+            ,JONG_ADD_INFO
+            ,AJONG
+            ,AJONG_ENG
+            ,BJONG
+            ,BJONG_ENG
+            ,GET_YN
+            ,JEJU_LOCNAME
+            ,MORP_CHAR
+            ,DIST_ADDR_ROAD
+            ,USE_YN
+            ,JEJU_DIST_YN
+            ,GE_NM
+            ,GE_NM_ENG
+            ,GE_A_KR
+            ,GE_A_ENG
+            ,MUN_NM
+            ,MUN_NM_ENG
+            ,MUN_A_KR
+            ,MUN_A_ENG
+            ,GANG_NM
+            ,GANG_NM_ENG
+            ,GANG_A_KR
+            ,GANG_A_ENG
+            ,MOK_NM
+            ,MOK_NM_ENG
+            ,MOK_A_KR
+            ,MOK_A_ENG
+            ,GOA_NM
+            ,GOA_NM_ENG
+            ,GOA_A_KR
+            ,GOA_A_ENG
+            ,DIRECT_INPUT_YN
+            ,BIOSP_ID
+            ,BIOSP_GROUP
+            FROM
+            t_cmi_jeju_biosp tcjb
+            WHERE USE_YN = 'Y' and get_yn = 'Y'
+			]]>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(jongB1Like)"> -- 영문 검색 조건
+            <![CDATA[
+    		AND (
+    			JONG_B1 LIKE CONCAT('%', #{jongB1Like}, '%')
+    			OR JONG_I1 LIKE CONCAT('%', #{jongB1Like}, '%')
+    			OR JONG_B2 LIKE CONCAT('%', #{jongB1Like}, '%')
+    			OR JONG_I2 LIKE CONCAT('%', #{jongB1Like}, '%')
+    			)
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(jongKorLike)"> -- 국명 검색 조건
+            <![CDATA[
+    		AND JONG_KOR LIKE CONCAT('%', #{jongKorLike}, '%')
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(searchLike)"> -- 국명/영문 검색 조건
+            <![CDATA[
+    		AND (
+    			JONG_KOR LIKE CONCAT('%', #{searchLike}, '%')
+    			OR JONG_B1 LIKE CONCAT('%', #{searchLike}, '%')
+    			)
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(spineLike)"> -- 분류군(척추동물) 검색 조건
+            <![CDATA[
+    		AND BIOSP_GROUP = #{spineLike}
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(seaweedLike)"> -- 분류군(해조류) 검색 조건
+            <![CDATA[
+    		AND BIOSP_GROUP = #{seaweedLike}
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(plantLike)"> -- 분류군(관속식물) 검색 조건
+            <![CDATA[
+    		AND BIOSP_GROUP = #{plantLike}
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(insectsLike)"> -- 분류군(곤충) 검색 조건
+            <![CDATA[
+    		AND BIOSP_GROUP = #{insectsLike}
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(bacteriaLike)"> -- 분류군(군류) 검색 조건
+            <![CDATA[
+    		AND BIOSP_GROUP = #{bacteriaLike}
+    		]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(microbialLike)"> -- 분류군(미생물) 검색 조건
+            <![CDATA[
+    		AND BIOSP_GROUP = #{microbialLike}
+    		]]>
+        </if>
+        ORDER BY tcjb.JONG_KOR is null, tcjb.JONG_KOR
+        <if test="pagingYn == true">
+            <![CDATA[
+		    LIMIT #{start}, #{length} -- 페이지네이션 처리 설정
+	        ]]>
+        </if>
+    </select>
+	
+	
+	- 화장품 원료 조회 쿼리
+		<select id="selectList" parameterType="cosmet" resultType="cosmet">
+        <![CDATA[
+            SELECT
+                distinct
+                tcp.COSMET_ID,
+                tcp.BIOSP_ID,
+                tcp.MATE_NUM,
+                tcp.CATEGORY,
+                tcp.CATEGORY_ENG,
+                tcp.FUNC,
+                tcp.FUNC_ENG,
+                tcp.ORG,
+                tcp.ORG_ENG,
+                tcp.PART,
+                tcp.PART_ENG,
+                tcp.TRADE,
+                tcp.TRADE_M,
+                tcp.USE_YN,
+                tcp.COSMET_NM,
+                tcp.SCNTNM,
+                tcp.SCNTNM_B1,
+                tcp.SCNTNM_B2,
+                tcp.SCNTNM_I1,
+                tcp.SCNTNM_I2,
+                tcp.DIRECT_INPUT_YN,
+                first_value(tcpi.COS_IMG_ID) over (partition by tcpi.COSMET_ID) IMG_ID,
+                first_value(tcpi.IMG) over (partition by tcpi.COSMET_ID) IMG_NM,
+                first_value(tcpi.IMG_PATH) over (partition by tcpi.COSMET_ID) IMG_PATH
+            FROM
+                t_cmi_cosmetics tcp
+            left join
+                t_cmi_cosmet_img tcpi on tcpi.COSMET_ID = tcp.COSMET_ID
+            WHERE
+                tcp.USE_YN != "N"
+            ]]>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(searchKeyword)" >
+            <choose>
+                <when test="searchTypeField == 'SCNTNM'">
+                <![CDATA[
+                   AND SCNTNM like CONCAT('%', #{searchKeyword}, '%') -- 학명 검색
+                ]]>
+                </when>
+                <when test="searchTypeField == 'COSMET_NM'">
+                    <![CDATA[
+                    AND COSMET_NM like CONCAT('%', #{searchKeyword}, '%') -- 화장품 소재명 검색
+                ]]>
+                </when>
+                <when test="searchTypeField == 'CATEGORY'">
+                    <![CDATA[
+                   AND CATEGORY like CONCAT('%', #{searchKeyword}, '%') -- 분류 검색
+                ]]>
+                </when>
+                <when test="searchTypeField == 'FUNC'">
+                    <![CDATA[
+                   AND FUNC like CONCAT('%', #{searchKeyword}, '%') -- 기능 검색
+                ]]>
+                </when>
+                <when test="searchTypeField == 'PART'">
+                    <![CDATA[
+                  AND  PART like CONCAT('%', #{searchKeyword}, '%') -- 부위 검색
+                ]]>
+                </when>
+                <when test="searchTypeField == 'ALL'"> -- 전체 검색
+                <![CDATA[
+                    AND
+                        (   SCNTNM like CONCAT('%', #{searchKeyword}, '%')
+                            OR COSMET_NM like CONCAT('%', #{searchKeyword}, '%')
+                            OR CATEGORY like CONCAT('%', #{searchKeyword}, '%')
+                            OR FUNC like CONCAT('%', #{searchKeyword}, '%')
+                            OR PART like CONCAT('%', #{searchKeyword}, '%') )
+                ]]>
+                </when>
+            </choose>
+        </if>
+        ORDER BY COSMET_ID DESC
+        <if test="pagingYn == true" > -- 페이지네이션 설정 처리
+            <![CDATA[
+                LIMIT #{start}, #{length}
+            ]]>
+        </if>
+    </select>
+
+	
+
+●제주 화장품 인증 관리
+	※타 시스템 이여서 저희가 쿼리를 확인할 수가 없습니다.
+	
+	
+●공공생산 인프라 관리 조회 쿼리
+ - 인프라 장비 조회 쿼리
+		<sql id="piInfoMng_columns">
+		SELECT distinct
+			tpi.DEV_CD
+		  ,tpi.DEV_NM_KO
+		  ,tpi.DEV_NM_EN
+		  ,tpi.DEV_REG_ID
+		  ,tpi.DEV_ORG
+		  ,tpi.MAKER
+		  ,tpi.MODEL
+		  ,tpi.USE_RANGE
+		  ,tpi.USE_TARGET
+		  ,tpi.RESERV_METH
+		  ,tpi.USE_METH
+		  ,tpi.DEV_DESC
+		  ,tpi.FEATURE
+		  ,tpi.USE_EX
+		  ,tpi.USE_INTRO
+		  ,tpi.CHARGE
+		  ,tpi.ASK_PH
+		  ,tpi.LOCATION
+		  ,tpi.REG_DTM
+		  ,tpi.DEL_DTM
+		  ,tpi.ZEUS_REG_ID
+		  ,tpi.file_id
+		  ,tpi.MANAGER_ID
+		  ,first_value(tcfi.ITEM_ID) over (partition by tpi.DEV_CD) IMG_ID
+		,first_value(tcfi.FILE_NM) over (partition by tpi.DEV_CD) IMG_NM
+		,first_value(tcfi.SAVE_FILE_NM) over (partition by tpi.DEV_CD) IMG_SAVE_NM
+		,first_value(tcfi.SAVE_PATH) over (partition by tpi.DEV_CD) IMG_SAVE_PATH
+		FROM T_PI_INFRA tpi
+		 left join t_com_file tcf on tcf.FILE_ID = tpi.FILE_ID
+		 left join t_com_file_item tcfi on tcfi.FILE_ID = tcf.FILE_ID
+		WHERE tpi.USE_YN = 'Y'
+	</sql>
+	<select id="selectList" parameterType="piInfoMngSearch" resultType="piInfoMng">
+		<include refid="piInfoMng_columns"/>
+		<if test='searchKeyword !=null and searchKeyword!=""'>
+			<if test="searchTypeField == 'devNmKoOrdevNmEnLike'" >
+				AND (tpi.DEV_NM_KO like concat('%', #{searchKeyword}, '%') or tpi.DEV_NM_EN like concat('%', #{searchKeyword}, '%'))  -- 장비명(국문/영문) 검색
+			</if>
+			<if test="searchTypeField == 'devRegIdOrZeusRegIdLike'" >
+				AND tpi.ZEUS_REG_ID like concat('%', #{searchKeyword}, '%') -- 제우스 장비등록번호 검색
+			</if>
+			<if test="searchTypeField == 'devOrgLike'" >
+				AND tpi.DEV_ORG like concat('%', #{searchKeyword}, '%') -- 보유기관 검색
+			</if>
+			<if test="searchTypeField == 'allLike'" > -- 전체 검색
+				AND (
+				tpi.DEV_NM_EN like concat('%', #{searchKeyword}, '%')
+				or tpi.DEV_NM_KO like concat('%', #{searchKeyword}, '%') or tpi.ZEUS_REG_ID like concat('%', #{searchKeyword}, '%')
+				or tpi.DEV_ORG like concat('%', #{searchKeyword}, '%')
+				)
+			</if>
+		</if>
+		<if test="pagingYn == true" >
+			<![CDATA[
+			LIMIT #{start}, #{length} -- 페이지네이션 처리 설정
+		]]>
+		</if>
+	</select>
+
+
+	
+●조제관리사 매칭 조회 쿼리
+ - 최근 판매상품 조회 쿼리
+	    <select id="selectList" parameterType="recent" resultType="recent">
+        select
+            distinct
+            tpco.ORDER_CD
+            , tpco.RCP_CD
+            , tpr.rcp_nm
+            , tcu.USER_NM
+            , tpr.REG_DTM
+            , tpco.IMAGE_FILE_ID
+            , tpco.ORDER_DT
+        from t_pm_cosmetic_order tpco
+        left join t_pm_recipe tpr on tpr.RCP_CD = tpco.RCP_CD
+        left join t_com_user tcu on tcu.USER_ID = tpr.REG_ID
+        WHERE 1=1
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(makerNmLike)" >
+            <![CDATA[
+				AND tcu.USER_NM LIKE CONCAT('%', #{makerNmLike}, '%') -- 조제관리사명 검색
+			]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(startRegDt) and @kr.co.ucsit.framework.util.StringUtil@isEmpty(endRegDt)" >
+            <![CDATA[
+				AND tpr.REG_DTM >= #{startRegDt} -- 등록일자 검색(시작일)
+			]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isEmpty(startRegDt) and @kr.co.ucsit.framework.util.StringUtil@isNotEmpty(endRegDt)" >
+            <![CDATA[
+				AND tpr.REG_DTM <= #{endRegDt} -- 등록일자 검색(종료일)
+			]]>
+        </if>
+        <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(startRegDt) and @kr.co.ucsit.framework.util.StringUtil@isNotEmpty(endRegDt)" >
+            <![CDATA[
+				AND tpr.REG_DTM between #{startRegDt} and #{endRegDt} - 등록일자 검색(기간 검색)
+			]]>
+        </if>
+        order by tpco.ORDER_CD  desc
+        <if test="pagingYn == true" >
+            <![CDATA[
+				LIMIT #{start}, #{length} -- 페이지네이션 처리 설정
+			]]>
+        </if>
+    </select>

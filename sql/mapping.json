@@ -1,0 +1,944 @@
+# 공지사항, 자료실, FAQ, Q&A => arti
+# 공지사항 => jcop-arti-notice
+# 자료실 => jcop-arti-archive
+# FAQ => jcop-arti-faq
+# QNA => jcop-arti-qna
+# 화장품 소재 정보 관리 =>
+# 제주 화장품 인증 관리 =>
+# 공공생산 인프라 관리 =>
+# 조제 관리사 매칭 =>
+
+"index" : {
+"max_result_window" : "10000",
+"analysis" : {
+"filter" : {
+"ngram_filter" : {
+"type" : "ngram",
+"max_gram" : "20"
+}
+},
+"char_filter" : {
+"remove_whitespace_filter" : {
+"pattern" : " ",
+"type" : "pattern_replace",
+"replacement" : ""
+},
+"remove_special_char_filter" : {
+"pattern" : "[^가-힣xfe0-9a-zA-Z\\s]",
+"type" : "pattern_replace",
+"replacement" : ""
+}
+},
+"analyzer" : {
+"token_analyzer" : {
+"tokenizer" : "token_pattern"
+},
+"underline_pattern_analyzer" : {
+"filter" : [
+"lowercase"
+],
+"tokenizer" : "underline_pattern"
+},
+"ngram_analyzer" : {
+"filter" : [
+"lowercase",
+"trim"
+],
+"tokenizer" : "ngram_tokenizer"
+},
+"underline_hierarchy_analyzer" : {
+"filter" : [
+"lowercase",
+"trim"
+],
+"tokenizer" : "underline_hierarchy_tokenizer"
+},
+"ngram_search_analyzer" : {
+"filter" : [
+"lowercase",
+"trim"
+],
+"tokenizer" : "ngram_search_tokenizer"
+},
+"underline_reverse_hierarchy_analyzer" : {
+"filter" : [
+"lowercase",
+"trim"
+],
+"tokenizer" : "underline_reverse_hierarchy_tokenizer"
+},
+"keyword_analyzer" : {
+"filter" : [
+"lowercase"
+],
+"char_filter" : [
+"remove_special_char_filter",
+"remove_whitespace_filter"
+],
+"tokenizer" : "my_keyword"
+},
+"pipe_analyzer" : {
+"tokenizer" : "pipe_tokenizer"
+},
+"standard_analyzer" : {
+"filter" : [
+"lowercase",
+"trim"
+],
+"tokenizer" : "letter"
+},
+"hierarchy_analyzer" : {
+"tokenizer" : "hierarchy_tokenizer"
+}
+},
+"tokenizer" : {
+"underline_reverse_hierarchy_tokenizer" : {
+"reverse" : "true",
+"type" : "path_hierarchy",
+"delimiter" : "_"
+},
+"my_keyword" : {
+"type" : "standard",
+"max_token_length" : "50"
+},
+"pipe_tokenizer" : {
+"pattern" : "|",
+"type" : "simple_pattern_split"
+},
+"my_standard" : {
+"type" : "standard",
+"max_token_length" : "50"
+},
+"underline_hierarchy_tokenizer" : {
+"type" : "path_hierarchy",
+"delimiter" : "_"
+},
+"underline_pattern" : {
+"pattern" : "_",
+"type" : "pattern"
+},
+"hierarchy_tokenizer" : {
+"type" : "path_hierarchy",
+"delimiter" : ">"
+},
+"my_pattern" : {
+"pattern" : "[,_.\\-]",
+"type" : "pattern"
+},
+"ngram_tokenizer" : {
+"token_chars" : [
+"letter",
+"digit"
+],
+"min_gram" : "1",
+"type" : "edge_ngram",
+"max_gram" : "20"
+},
+"token_pattern" : {
+"pattern" : "|",
+"type" : "simple_pattern_split",
+"max_token_length" : "100000"
+},
+"ngram_search_tokenizer" : {
+"pattern" : "[^가-힣xfe0-9a-zA-Z\\s]",
+"min_gram" : "2",
+"type" : "pattern",
+"max_gram" : "20"
+}
+}
+},
+"number_of_shards" : "3",
+"auto_expand_replicas" : "0-2"
+}
+
+PUT /_template/arti_template
+{
+  "index_patterns": [
+    "jcop-arti-*"
+  ],
+  "settings": {
+    "index": {
+      "max_result_window": "10000000",
+      "highlight": {
+        "max_analyzed_offset": "10000000"
+      },
+      "max_ngram_diff": "50",
+      "analysis": {
+        "filter": {
+          "ngram_filter": {
+            "type": "ngram",
+            "max_gram": "20"
+          }
+        },
+        "char_filter": {
+          "remove_whitespace_filter": {
+            "pattern": " ",
+            "type": "pattern_replace",
+            "replacement": ""
+          },
+          "remove_special_char_filter": {
+            "pattern": "[^가-힣xfe0-9a-zA-Z\\s]",
+            "type": "pattern_replace",
+            "replacement": ""
+          }
+        },
+        "analyzer": {
+          "pattern_analyzer": {
+            "filter": [
+              "lowercase"
+            ],
+            "tokenizer": "my_pattern"
+          },
+          "ngram_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "ngram_tokenizer"
+          },
+          "standard_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "my_standard"
+          },
+          "ngram_search_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "ngram_search_tokenizer"
+          },
+          "keyword_analyzer": {
+            "filter": [
+              "lowercase"
+            ],
+            "char_filter": [
+              "remove_special_char_filter",
+              "remove_whitespace_filter"
+            ],
+            "tokenizer": "my_keyword"
+          }
+        },
+        "tokenizer": {
+          "my_standard": {
+            "type": "standard",
+            "max_token_length": "10"
+          },
+          "my_pattern": {
+            "pattern": ",",
+            "type": "pattern"
+          },
+          "ngram_tokenizer": {
+            "token_chars": [
+              "letter",
+              "digit"
+            ],
+            "min_gram": "2",
+            "type": "edge_ngram",
+            "max_gram": "20"
+          },
+          "my_keyword": {
+            "type": "standard",
+            "max_token_length": "10"
+          },
+          "ngram_search_tokenizer": {
+            "pattern": "[^가-힣xfe0-9a-zA-Z\\s]",
+            "min_gram": "2",
+            "type": "pattern",
+            "max_gram": "20"
+          }
+        }
+      },
+      "number_of_shards": "12",
+      "auto_expand_replicas": "0-2"
+    }
+  },
+  "mappings": {
+    "properties": {
+      "arti_id": {
+        "type": "long"
+      },
+      "bod_id": {
+        "type": "long"
+      },
+      "arti_grp": {
+        "type": "long"
+      },
+      "depth": {
+        "type": "long"
+      },
+      "title": {
+        "type": "text",
+        "fields": {
+          "standard": {
+            "search_analyzer": "standard_analyzer",
+            "analyzer": "standard_analyzer",
+            "type": "text"
+          },
+          "kobrick": {
+            "search_analyzer": "kobrick_search",
+            "analyzer": "kobrick",
+            "type": "text"
+          },
+          "text_keyword": {
+            "search_analyzer": "keyword_analyzer",
+            "analyzer": "keyword_analyzer",
+            "type": "text"
+          },
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "cont": {
+        "type": "text",
+        "fields": {
+          "standard": {
+            "search_analyzer": "standard_analyzer",
+            "analyzer": "standard_analyzer",
+            "type": "text"
+          },
+          "kobrick": {
+            "search_analyzer": "kobrick_search",
+            "analyzer": "kobrick",
+            "type": "text"
+          },
+          "text_keyword": {
+            "search_analyzer": "keyword_analyzer",
+            "analyzer": "keyword_analyzer",
+            "type": "text"
+          },
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "scrt_yn": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "noti_yn": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "file_id": {
+        "type": "long"
+      },
+      "file_cnt": {
+        "type": "long"
+      },
+      "reg_name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "replyCnt": {
+        "type": "long"
+      },
+      "file_prview": {
+        "type": "long"
+      },
+      "hit": {
+        "type": "long"
+      },
+      "reg_id": {
+        "type": "long"
+      },
+      "reg_dtm": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+        "type": "date"
+      },
+      "upd_id": {
+        "type": "long"
+      },
+      "upd_dtm": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+        "type": "date"
+      },
+      "del_id": {
+        "type": "long"
+      },
+      "del_dtm": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+        "type": "date"
+      },
+      "cmnt_cnt": {
+        "type": "long"
+      },
+      "writer": {
+        "type": "text"
+      }
+    }
+  },
+  "aliases": {}
+}
+
+
+
+PUT /_template/infra_template
+{
+  "index_patterns": [
+    "jcop-infra-*"
+  ],
+  "settings": {
+    "index": {
+      "max_result_window": "10000000",
+      "highlight": {
+        "max_analyzed_offset": "10000000"
+      },
+      "max_ngram_diff": "50",
+      "analysis": {
+        "filter": {
+          "ngram_filter": {
+            "type": "ngram",
+            "max_gram": "20"
+          }
+        },
+        "char_filter": {
+          "remove_whitespace_filter": {
+            "pattern": " ",
+            "type": "pattern_replace",
+            "replacement": ""
+          },
+          "remove_special_char_filter": {
+            "pattern": ""
+            "[^가-힣xfe0-9a-zA-Z\s]"
+            "",
+            "type": "pattern_replace",
+            "replacement": ""
+          }
+        },
+        "analyzer": {
+          "pattern_analyzer": {
+            "filter": [
+              "lowercase"
+            ],
+            "tokenizer": "my_pattern"
+          },
+          "ngram_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "ngram_tokenizer"
+          },
+          "standard_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "my_standard"
+          },
+          "ngram_search_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "ngram_search_tokenizer"
+          },
+          "keyword_analyzer": {
+            "filter": [
+              "lowercase"
+            ],
+            "char_filter": [
+              "remove_special_char_filter",
+              "remove_whitespace_filter"
+            ],
+            "tokenizer": "my_keyword"
+          }
+        },
+        "tokenizer": {
+          "my_standard": {
+            "type": "standard",
+            "max_token_length": "10"
+          },
+          "my_pattern": {
+            "pattern": ",",
+            "type": "pattern"
+          },
+          "ngram_tokenizer": {
+            "token_chars": [
+              "letter",
+              "digit"
+            ],
+            "min_gram": "2",
+            "type": "edge_ngram",
+            "max_gram": "20"
+          },
+          "my_keyword": {
+            "type": "standard",
+            "max_token_length": "10"
+          },
+          "ngram_search_tokenizer": {
+            "pattern": ""
+            "[^가-힣xfe0-9a-zA-Z\s]"
+            "",
+            "min_gram": "2",
+            "type": "pattern",
+            "max_gram": "20"
+          }
+        }
+      },
+      "number_of_shards": "12",
+      "auto_expand_replicas": "0-2"
+    }
+  },
+  "mappings": {
+    "properties": {
+      "dev_cd": {
+        "type": "long"
+      },
+      "dev_nm_ko": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "dev_nm_en": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "dev_reg_id": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "dev_org": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "maker": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "model": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "use_range": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "use_target": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "reserv_meth": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "use_meth": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "dev_desc": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "feature": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "use_ex": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "use_intro": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "charge": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "ask_ph": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "location": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "reg_dtm": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+        "type": "date"
+      },
+      "del_dtm": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+        "type": "date"
+      },
+      "zeus_reg_id": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "file_id": {
+        "type": "long"
+      },
+      "manager_id": {
+        "type": "long"
+      },
+      "img_id": {
+        "type": "long"
+      },
+      "img_nm": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "img_save_nm": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "img_save_path": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  },
+  "aliases": {}
+}
+
+
+PUT /_template/tpco_template
+{
+  "index_patterns": [
+    "jcop-tpco-*"
+  ],
+  "settings": {
+    "index": {
+      "max_result_window": "10000000",
+      "highlight": {
+        "max_analyzed_offset": "10000000"
+      },
+      "max_ngram_diff": "50",
+      "analysis": {
+        "filter": {
+          "ngram_filter": {
+            "type": "ngram",
+            "max_gram": "20"
+          }
+        },
+        "char_filter": {
+          "remove_whitespace_filter": {
+            "pattern": " ",
+            "type": "pattern_replace",
+            "replacement": ""
+          },
+          "remove_special_char_filter": {
+            "pattern": ""
+            "^가-힣xfe0-9a-zA-Z\s]"
+            "",
+            "type": "pattern_replace",
+            "replacement": ""
+          }
+        },
+        "analyzer": {
+          "pattern_analyzer": {
+            "filter": [
+              "lowercase"
+            ],
+            "tokenizer": "my_pattern"
+          },
+          "ngram_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "ngram_tokenizer"
+          },
+          "standard_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "my_standard"
+          },
+          "ngram_search_analyzer": {
+            "filter": [
+              "lowercase",
+              "trim"
+            ],
+            "tokenizer": "ngram_search_tokenizer"
+          },
+          "keyword_analyzer": {
+            "filter": [
+              "lowercase"
+            ],
+            "char_filter": [
+              "remove_special_char_filter",
+              "remove_whitespace_filter"
+            ],
+            "tokenizer": "my_keyword"
+          }
+        },
+        "tokenizer": {
+          "my_standard": {
+            "type": "standard",
+            "max_token_length": "10"
+          },
+          "my_pattern": {
+            "pattern": ",",
+            "type": "pattern"
+          },
+          "ngram_tokenizer": {
+            "token_chars": [
+              "letter",
+              "digit"
+            ],
+            "min_gram": "2",
+            "type": "edge_ngram",
+            "max_gram": "20"
+          },
+          "my_keyword": {
+            "type": "standard",
+            "max_token_length": "10"
+          },
+          "ngram_search_tokenizer": {
+            "pattern": ""
+            "[^가-힣xfe0-9a-zA-Z\s]"
+            "",
+            "min_gram": "1",
+            "type": "pattern",
+            "max_gram": "20"
+          }
+        }
+      },
+      "number_of_shards": "12",
+      "auto_expand_replicas": "0-2"
+    }
+  },
+  "mappings": {
+    "properties": {
+      "order_cd": {
+        "type": "long"
+      },
+      "rcp_cd": {
+        "type": "long"
+      },
+      "rcp_nm": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "user_nm": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "reg_dtm": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+        "type": "date"
+      },
+      "image_file_id": {
+        "type": "long"
+      },
+      "order_dt": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+        "type": "date"
+      },
+      "shape": {
+        "type": "text",
+        "fields": {
+          "standard": {
+            "search_analyzer": "standard_analyzer",
+            "analyzer": "standard_analyzer",
+            "type": "text"
+          },
+          "kobrick": {
+            "search_analyzer": "kobrick_search",
+            "analyzer": "kobrick",
+            "type": "text"
+          },
+          "text_keyword": {
+            "search_analyzer": "keyword_analyzer",
+            "analyzer": "keyword_analyzer",
+            "type": "text"
+          },
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "benefit": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  },
+  "aliases": {}
+}
+
+
+
+//2
+PUT /_template/tpco_template
+{
+  "index_patterns": [
+  "jcop-tpco-*"
+],
+    "settings": {},
+  "mappings": {
+  "doc": {
+    "properties": {
+      "order_cd": {
+        "type": "long"
+      },
+      "rcp_cd": {
+        "type": "long"
+      },
+      "rcp_nm": {
+        "type": "text",
+            "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "user_nm": {
+        "type": "text",
+            "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "reg_dtm": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+            "type": "date"
+      },
+      "image_file_id": {
+        "type": "long"
+      },
+      "order_dt": {
+        "format": "strict_date_optional_time||yyyy-MM-dd||epoch_millis||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss",
+            "type": "date"
+      },
+      "shape": {
+        "type": "text",
+            "fields": {
+          "keyword": {
+            "type": "keyword"
+          },
+          "kobrick": {
+            "type": "text",
+                "analyzer": "kobrick",
+                "search_analyzer": "kobrick_search"
+          }
+        }
+      },
+      "benefit": {
+        "type": "text",
+            "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+},
+  "aliases": {}
+}
