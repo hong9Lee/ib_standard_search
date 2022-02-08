@@ -9,7 +9,6 @@ module.exports = {
         },
         request: {
             keyword: '',
-            researchKeywords: [],
             sorts: ['_score^desc'],
             size: 10,
             from: 0
@@ -61,8 +60,7 @@ module.exports = {
 
         },
         request: {
-            keyword: '',
-            researchKeywords: []
+            keyword: ''
         },
         response: {
             // mall: [],

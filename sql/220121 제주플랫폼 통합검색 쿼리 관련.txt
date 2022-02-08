@@ -6,7 +6,7 @@
 	<select id="selectList" parameterType="bodArtiSearch" resultType="bodArti">
 	<![CDATA[
 		SELECT * FROM
-		(SELECT	
+		(SELECT
 			ARTI_ID,
 			BOD_ID,
 			ARTI_GRP,
@@ -29,7 +29,7 @@
 			DEL_DTM,
 			(SELECT COUNT(CMNT_ID) FROM T_CMS_BOD_CMNT WHERE T_CMS_BOD_CMNT.ARTI_ID = T_CMS_BOD_ARTI.ARTI_ID) AS CMNT_CNT,
 		    WRITER
-		FROM		
+		FROM
 			T_CMS_BOD_ARTI
 		) BOD_INFO
 		WHERE
@@ -37,43 +37,43 @@
 	]]>
 		<choose>
 			<when test="bodId == 1" > -- 공지사항인 경우
-			<![CDATA[ 
+			<![CDATA[
 				AND BOD_INFO.BOD_ID IN (1,5,9,13,17,21,25) -- 각 시스템 공지사항 아이디
 			]]>
 			</when>
 			<when test="bodId == 2" > -- 자료실인 경우
-			<![CDATA[ 
+			<![CDATA[
 				AND BOD_INFO.BOD_ID IN (2,6,10,14,18,22,26) -- 각 시스템 자료실 아이디
 			]]>
 			</when>
 			<when test="bodId == 3" > -- FAQ인 경우
-			<![CDATA[ 
+			<![CDATA[
 				AND BOD_INFO.BOD_ID IN (3,7,11,15,19,23,27) -- 각 시스템 FAQ 아이디
 			]]>
 			</when>
 			<when test="bodId == 4" > -- QNA인 경우
-			<![CDATA[ 
+			<![CDATA[
 				AND BOD_INFO.BOD_ID IN (4,8,12,16,20,24,28) -- 각 시스템 QNA 아이디
 			]]>
 			</when>
 			<when test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(bodId)" >
-			<![CDATA[ 
+			<![CDATA[
 				AND BOD_INFO.BOD_ID = #{bodId}
 			]]>
 			</when>
 		</choose>
 		<if test="scrtYn != null" > -- 비밀글 사용 여부 체크
-		<![CDATA[ 
+		<![CDATA[
 			AND BOD_INFO.SCRT_YN = #{scrtYn}
 		]]>
 		</if>
 		<if test="notiYn != null" > -- 공지사항 여부
-		<![CDATA[ 
+		<![CDATA[
 			AND BOD_INFO.NOTI_YN = #{notiYn}
 		]]>
 		</if>
 		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(titleLike)" > -- 제목 검색 조건
-		<![CDATA[ 
+		<![CDATA[
 			AND BOD_INFO.TITLE LIKE CONCAT('%', #{titleLike}, '%')
 		]]>
 		</if>
@@ -83,30 +83,30 @@
 		]]>
 		</if>
 		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(contLike)" > -- 내용 검색 조건
-		<![CDATA[ 
+		<![CDATA[
 			AND BOD_INFO.CONT LIKE CONCAT('%', #{contLike}, '%')
 		]]>
 		</if>
 		<if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(searchLike)" > -- 전체 검색 조건
-		<![CDATA[ 
+		<![CDATA[
 			AND (BOD_INFO.CONT LIKE CONCAT('%', #{searchLike}, '%') OR BOD_INFO.TITLE LIKE CONCAT('%', #{searchLike}, '%') OR BOD_INFO.REG_NAME LIKE CONCAT('%', #{searchLike}, '%'))
 		]]>
 		</if>
-		<![CDATA[ 
+		<![CDATA[
 			ORDER BY BOD_INFO.ARTI_GRP DESC, BOD_INFO.DEPTH
 		]]>
 		<if test="pagingYn == true" >
-		<![CDATA[ 
+		<![CDATA[
 			LIMIT #{start}, #{length} -- 페이지네이션 길이 설정
 		]]>
 		</if>
 	</select>
-	
-	
-	
-	
+
+
+
+
 ◆화장품 소재 정보 관리 조회 쿼리
-	
+
 	- 화장품 원물 조회 쿼리
 		<select id="selectList" parameterType="biospSearch" resultType="biospSearch">
         <![CDATA[
@@ -225,8 +225,8 @@
 	        ]]>
         </if>
     </select>
-	
-	
+
+
 	- 화장품 원료 조회 쿼리
 		<select id="selectList" parameterType="cosmet" resultType="cosmet">
         <![CDATA[
@@ -310,12 +310,73 @@
         </if>
     </select>
 
-	
+
 
 ●제주 화장품 인증 관리
 	※타 시스템 이여서 저희가 쿼리를 확인할 수가 없습니다.
-	
-	
+
+	        select
+                cos_id as cosId
+                ,cp_id as cpId
+                ,cos_cert_state as cosCertState
+                ,cos_cert_state_name as cosCertStateName
+                ,cert_count as certCount
+                ,cp_name as cpName
+                ,cp_owner as cpOwner
+                ,cos_type as cosType
+                ,cos_type_name as cosTypeName
+                ,cos_type_detail as cosTypeDetail
+                ,cos_type_detail_name as cosTypeDetailName
+                ,cos_name as cosName
+                ,cos_name_cn as cosNameCn
+                ,cos_name_en as cosNameEn
+                ,cos_info as cosInfo
+                ,cos_file as cosFile
+                ,cos_cert as cosCert
+                ,cos_cert_first_start_date as cosCertFirstStartDate
+                ,cos_cert_start_date as cosCertStartDate
+                ,cos_cert_end_date as cosCertEndDate
+                ,cos_img as cosImg
+                ,reg_id as regId
+                ,reg_dtm as regDtm
+                ,upd_id as updId
+                ,upd_dtm as updDtm
+                ,reg_date as regDate
+                ,cp_mng_email as cpMngEmail
+                ,cert_mng_email as certMngEmail
+            from t_cmi_cert_prod
+            where 1=1
+            <if test="@kr.co.ucsit.framework.util.StringUtil@isNotEmpty(searchText)" >
+                AND
+                (
+                <if test="searchType == 'all' || searchType == 'cos'" >
+                    cos_name like concat('%',#{searchText},'%')
+                    or
+                    cos_name_cn like concat('%',#{searchText},'%')
+                    or
+                    cos_name_en like concat('%',#{searchText},'%')
+                </if>
+                <if test="searchType == 'all'" >
+                    or
+                </if>
+                <if test="searchType == 'all' || searchType == 'cert'" >
+                    cos_cert like concat('%',#{searchText},'%')
+                </if>
+                <if test="searchType == 'all'" >
+                    or
+                </if>
+                <if test="searchType == 'all' || searchType == 'com'" >
+                    cp_name  like concat('%',#{searchText},'%')
+                </if>
+                )
+            </if>
+            <if test="pagingYn == true" >
+                <![CDATA[
+    		LIMIT #{start}, #{length}
+    	    ]]>
+            </if>
+
+
 ●공공생산 인프라 관리 조회 쿼리
  - 인프라 장비 조회 쿼리
 		<sql id="piInfoMng_columns">
@@ -380,7 +441,7 @@
 	</select>
 
 
-	
+
 ●조제관리사 매칭 조회 쿼리
  - 최근 판매상품 조회 쿼리
 	    <select id="selectList" parameterType="recent" resultType="recent">

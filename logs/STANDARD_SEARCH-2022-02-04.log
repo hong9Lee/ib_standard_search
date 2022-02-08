@@ -13,8 +13,383 @@
 2022-02-04 11:06:57.888 [INFO] - dd
 2022-02-04 11:06:57.889 [ERROR] - mainService err | TypeError: QUERY_BODY[indexNm] is not a function
     at Object.msearchBody (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/util/util.js:82:35)
-    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/main/mainService.js:19:112
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/main/
+    mainService.js:19:112
     at Array.flatMap (<anonymous>)
     at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/main/mainService.js:19:45)
     at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/main/mainApi.js:26:15
     at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:38:49.305 [INFO] - *************** config *****************
+2022-02-04 13:38:49.307 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:38:49.307 [INFO] - * app_port : 19200
+2022-02-04 13:38:49.307 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:38:49.307 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:38:49.307 [INFO] - ****************************************
+2022-02-04 13:39:10.736 [INFO] - *************** config *****************
+2022-02-04 13:39:10.738 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:39:10.738 [INFO] - * app_port : 19200
+2022-02-04 13:39:10.738 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:39:10.739 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:39:10.739 [INFO] - ****************************************
+2022-02-04 13:39:12.874 [INFO] - arti
+2022-02-04 13:39:34.073 [INFO] - *************** config *****************
+2022-02-04 13:39:34.074 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:39:34.074 [INFO] - * app_port : 19200
+2022-02-04 13:39:34.075 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:39:34.075 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:39:34.075 [INFO] - ****************************************
+2022-02-04 13:39:34.087 [INFO] - test index =>
+2022-02-04 13:39:54.872 [INFO] - *************** config *****************
+2022-02-04 13:39:54.874 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:39:54.874 [INFO] - * app_port : 19200
+2022-02-04 13:39:54.874 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:39:54.874 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:39:54.875 [INFO] - ****************************************
+2022-02-04 13:39:54.885 [INFO] - test index =>
+2022-02-04 13:40:05.888 [INFO] - *************** config *****************
+2022-02-04 13:40:05.889 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:40:05.890 [INFO] - * app_port : 19200
+2022-02-04 13:40:05.890 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:40:05.890 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:40:05.890 [INFO] - ****************************************
+2022-02-04 13:40:07.711 [INFO] - test index =>
+2022-02-04 13:40:30.189 [INFO] - *************** config *****************
+2022-02-04 13:40:30.191 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:40:30.191 [INFO] - * app_port : 19200
+2022-02-04 13:40:30.191 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:40:30.191 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:40:30.191 [INFO] - ****************************************
+2022-02-04 13:40:32.282 [INFO] - test index => arti
+2022-02-04 13:41:18.511 [INFO] - *************** config *****************
+2022-02-04 13:41:18.513 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:41:18.513 [INFO] - * app_port : 19200
+2022-02-04 13:41:18.513 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:41:18.513 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:41:18.513 [INFO] - ****************************************
+2022-02-04 13:41:18.523 [INFO] - test index => arti
+2022-02-04 13:41:30.735 [INFO] - *************** config *****************
+2022-02-04 13:41:30.737 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:41:30.737 [INFO] - * app_port : 19200
+2022-02-04 13:41:30.737 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:41:30.738 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:41:30.738 [INFO] - ****************************************
+2022-02-04 13:41:30.748 [INFO] - test index => arti
+2022-02-04 13:41:33.662 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:21:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:46:39.397 [INFO] - *************** config *****************
+2022-02-04 13:46:39.399 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:46:39.399 [INFO] - * app_port : 19200
+2022-02-04 13:46:39.399 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:46:39.399 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:46:39.399 [INFO] - ****************************************
+2022-02-04 13:46:39.410 [INFO] - test index => arti
+2022-02-04 13:46:41.517 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:21:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:46:50.737 [INFO] - *************** config *****************
+2022-02-04 13:46:50.739 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:46:50.739 [INFO] - * app_port : 19200
+2022-02-04 13:46:50.739 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:46:50.739 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:46:50.739 [INFO] - ****************************************
+2022-02-04 13:46:50.751 [INFO] - test index => arti
+2022-02-04 13:46:52.314 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:21:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:50:01.938 [INFO] - *************** config *****************
+2022-02-04 13:50:01.939 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:50:01.939 [INFO] - * app_port : 19200
+2022-02-04 13:50:01.939 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:50:01.940 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:50:01.940 [INFO] - ****************************************
+2022-02-04 13:50:01.950 [INFO] - test index => arti
+2022-02-04 13:50:04.469 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:24:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:50:18.299 [INFO] - *************** config *****************
+2022-02-04 13:50:18.300 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:50:18.300 [INFO] - * app_port : 19200
+2022-02-04 13:50:18.301 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:50:18.301 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:50:18.301 [INFO] - ****************************************
+2022-02-04 13:50:18.311 [INFO] - test index => arti
+2022-02-04 13:50:19.653 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:24:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:51:57.946 [INFO] - *************** config *****************
+2022-02-04 13:51:57.948 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:51:57.949 [INFO] - * app_port : 19200
+2022-02-04 13:51:57.949 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:51:57.949 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:51:57.949 [INFO] - ****************************************
+2022-02-04 13:51:57.960 [INFO] - test index => arti
+2022-02-04 13:51:59.537 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:25:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:52:32.335 [INFO] - *************** config *****************
+2022-02-04 13:52:32.336 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:52:32.336 [INFO] - * app_port : 19200
+2022-02-04 13:52:32.336 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:52:32.336 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:52:32.337 [INFO] - ****************************************
+2022-02-04 13:52:32.346 [INFO] - test index => arti
+2022-02-04 13:52:33.896 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:26:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:54:19.135 [INFO] - *************** config *****************
+2022-02-04 13:54:19.136 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:54:19.137 [INFO] - * app_port : 19200
+2022-02-04 13:54:19.137 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:54:19.137 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:54:19.137 [INFO] - ****************************************
+2022-02-04 13:54:19.147 [INFO] - test index => arti
+2022-02-04 13:54:20.723 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:28:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 13:57:11.858 [INFO] - *************** config *****************
+2022-02-04 13:57:11.859 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 13:57:11.859 [INFO] - * app_port : 19200
+2022-02-04 13:57:11.859 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 13:57:11.860 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 13:57:11.860 [INFO] - ****************************************
+2022-02-04 13:57:11.869 [INFO] - test index => arti
+2022-02-04 13:57:13.480 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:31:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:11:00.999 [INFO] - *************** config *****************
+2022-02-04 14:11:01.000 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:11:01.000 [INFO] - * app_port : 19200
+2022-02-04 14:11:01.000 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:11:01.001 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:11:01.001 [INFO] - ****************************************
+2022-02-04 14:11:01.012 [INFO] - test index => arti
+2022-02-04 14:11:06.040 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:11:23.426 [INFO] - *************** config *****************
+2022-02-04 14:11:23.428 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:11:23.428 [INFO] - * app_port : 19200
+2022-02-04 14:11:23.428 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:11:23.428 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:11:23.428 [INFO] - ****************************************
+2022-02-04 14:11:23.439 [INFO] - test index => arti
+2022-02-04 14:11:25.131 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:12:14.174 [INFO] - *************** config *****************
+2022-02-04 14:12:14.176 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:12:14.176 [INFO] - * app_port : 19200
+2022-02-04 14:12:14.176 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:12:14.176 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:12:14.176 [INFO] - ****************************************
+2022-02-04 14:12:14.187 [INFO] - test index => arti
+2022-02-04 14:12:15.674 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:12:34.768 [INFO] - *************** config *****************
+2022-02-04 14:12:34.770 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:12:34.770 [INFO] - * app_port : 19200
+2022-02-04 14:12:34.770 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:12:34.770 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:12:34.770 [INFO] - ****************************************
+2022-02-04 14:12:34.780 [INFO] - test index => arti
+2022-02-04 14:12:36.113 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:40:17.395 [INFO] - *************** config *****************
+2022-02-04 14:40:17.396 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:40:17.397 [INFO] - * app_port : 19200
+2022-02-04 14:40:17.397 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:40:17.397 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:40:17.397 [INFO] - ****************************************
+2022-02-04 14:40:17.407 [INFO] - test index => arti
+2022-02-04 14:40:19.133 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:40:31.992 [INFO] - *************** config *****************
+2022-02-04 14:40:31.994 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:40:31.994 [INFO] - * app_port : 19200
+2022-02-04 14:40:31.995 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:40:31.995 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:40:31.995 [INFO] - ****************************************
+2022-02-04 14:40:32.005 [INFO] - test index => arti
+2022-02-04 14:40:33.680 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:42:48.609 [INFO] - *************** config *****************
+2022-02-04 14:42:48.610 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:42:48.610 [INFO] - * app_port : 19200
+2022-02-04 14:42:48.611 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:42:48.611 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:42:48.611 [INFO] - ****************************************
+2022-02-04 14:42:48.621 [INFO] - test index => arti
+2022-02-04 14:42:50.388 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:43:01.622 [INFO] - *************** config *****************
+2022-02-04 14:43:01.624 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:43:01.624 [INFO] - * app_port : 19200
+2022-02-04 14:43:01.624 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:43:01.624 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:43:01.624 [INFO] - ****************************************
+2022-02-04 14:43:01.635 [INFO] - test index => arti
+2022-02-04 14:43:03.353 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:45:32.159 [INFO] - *************** config *****************
+2022-02-04 14:45:32.160 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:45:32.160 [INFO] - * app_port : 19200
+2022-02-04 14:45:32.160 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:45:32.161 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:45:32.161 [INFO] - ****************************************
+2022-02-04 14:45:32.171 [INFO] - test index => arti
+2022-02-04 14:45:35.743 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:46:26.334 [INFO] - *************** config *****************
+2022-02-04 14:46:26.336 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:46:26.336 [INFO] - * app_port : 19200
+2022-02-04 14:46:26.336 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:46:26.336 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:46:26.336 [INFO] - ****************************************
+2022-02-04 14:46:26.346 [INFO] - test index => arti
+2022-02-04 14:46:28.347 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:46:51.892 [INFO] - *************** config *****************
+2022-02-04 14:46:51.894 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:46:51.894 [INFO] - * app_port : 19200
+2022-02-04 14:46:51.894 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:46:51.894 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:46:51.895 [INFO] - ****************************************
+2022-02-04 14:46:51.906 [INFO] - test index => arti
+2022-02-04 14:46:53.712 [ERROR] - arti Service err | ReferenceError: mainApiResult is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:34)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:52:15.721 [INFO] - *************** config *****************
+2022-02-04 14:52:15.723 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:52:15.723 [INFO] - * app_port : 19200
+2022-02-04 14:52:15.723 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:52:15.723 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:52:15.723 [INFO] - ****************************************
+2022-02-04 14:52:15.734 [INFO] - test index => arti
+2022-02-04 14:52:19.495 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:53:02.428 [INFO] - *************** config *****************
+2022-02-04 14:53:02.430 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:53:02.430 [INFO] - * app_port : 19200
+2022-02-04 14:53:02.430 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:53:02.430 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:53:02.430 [INFO] - ****************************************
+2022-02-04 14:53:02.440 [INFO] - test index => arti
+2022-02-04 14:53:04.015 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:55:12.392 [INFO] - *************** config *****************
+2022-02-04 14:55:12.394 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:55:12.394 [INFO] - * app_port : 19200
+2022-02-04 14:55:12.394 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:55:12.394 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:55:12.394 [INFO] - ****************************************
+2022-02-04 14:55:12.404 [INFO] - test index => arti
+2022-02-04 14:55:14.069 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:55:51.931 [INFO] - *************** config *****************
+2022-02-04 14:55:51.933 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:55:51.933 [INFO] - * app_port : 19200
+2022-02-04 14:55:51.933 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:55:51.933 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:55:51.933 [INFO] - ****************************************
+2022-02-04 14:55:51.943 [INFO] - test index => arti
+2022-02-04 14:55:53.898 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:56:37.106 [INFO] - *************** config *****************
+2022-02-04 14:56:37.108 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:56:37.108 [INFO] - * app_port : 19200
+2022-02-04 14:56:37.108 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:56:37.108 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:56:37.108 [INFO] - ****************************************
+2022-02-04 14:56:37.118 [INFO] - test index => arti
+2022-02-04 14:56:38.725 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:56:52.088 [INFO] - *************** config *****************
+2022-02-04 14:56:52.089 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:56:52.090 [INFO] - * app_port : 19200
+2022-02-04 14:56:52.090 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:56:52.090 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:56:52.090 [INFO] - ****************************************
+2022-02-04 14:56:52.101 [INFO] - test index => arti
+2022-02-04 14:56:53.574 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 14:58:18.105 [INFO] - *************** config *****************
+2022-02-04 14:58:18.107 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 14:58:18.107 [INFO] - * app_port : 19200
+2022-02-04 14:58:18.107 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 14:58:18.107 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 14:58:18.107 [INFO] - ****************************************
+2022-02-04 14:58:18.117 [INFO] - test index => arti
+2022-02-04 14:58:21.961 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 15:02:51.505 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:34:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 15:08:02.573 [INFO] - *************** config *****************
+2022-02-04 15:08:02.574 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 15:08:02.574 [INFO] - * app_port : 19200
+2022-02-04 15:08:02.575 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 15:08:02.575 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 15:08:02.575 [INFO] - ****************************************
+2022-02-04 15:08:02.585 [INFO] - test index => arti
+2022-02-04 15:08:14.529 [INFO] - *************** config *****************
+2022-02-04 15:08:14.531 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 15:08:14.531 [INFO] - * app_port : 19200
+2022-02-04 15:08:14.531 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 15:08:14.531 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 15:08:14.532 [INFO] - ****************************************
+2022-02-04 15:08:14.541 [INFO] - test index => arti
+2022-02-04 15:08:16.207 [ERROR] - arti Service err | ReferenceError: result is not defined
+    at Object.search (/Users/ihong-gyu/Desktop/jeju/jejuSearch/src/service/arti/infraService.js:33:63)
+    at /Users/ihong-gyu/Desktop/jeju/jejuSearch/src/api/artiApi.js:26:15
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+2022-02-04 15:09:58.480 [INFO] - *************** config *****************
+2022-02-04 15:09:58.482 [INFO] - * runMode [local/dev/prod] : local
+2022-02-04 15:09:58.482 [INFO] - * app_port : 19200
+2022-02-04 15:09:58.482 [INFO] - * openquery_host : http://118.67.152.94:19100
+2022-02-04 15:09:58.482 [INFO] - * elasticsearch : http://118.67.152.94:9200
+2022-02-04 15:09:58.482 [INFO] - ****************************************
+2022-02-04 15:09:58.492 [INFO] - test index => arti

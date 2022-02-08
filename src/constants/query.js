@@ -1,105 +1,72 @@
-const { QUERY_STRING_FIELDS } = require('./index');
-const { logger } = require('../module/logger');
+const { QUERY_STRING_FIELDS, INCLUDE_FIELDS } = require('./index');
 
-const setQueryString = (keyword, ...indexNms) => ({
-    query_string: {
-        query: keyword,
-        fields: indexNms.flatMap(indexNm => QUERY_STRING_FIELDS[indexNm])
-    }
+const HIGHLIGHT_BODY = () => ({
+    pre_tags  : '<HS>',
+    post_tags : '</HS>',
+    fields    : {'*' : {}}
 });
 
 const setMatchAll = () => ({
-    match_all: {}
+    match_all : {}
 });
 
-const QUERY_BODY = {
-    MALL: (keyword, searchOption) => {
-        const body = {
-            bool: {
-                must: [],
-                must_not: [
-                    {
-                        exists: {
-                            field: 'IMPR_CORP_NO'
-                        }
-                    }
-                ],
-                should: [],
-                filter: [
-                    {
-                        exists: {
-                            field: 'GDS_DIV_CD'
-                        }
-                    },
-                    // {
-                    //     term: {
-                    //         'RPRSNT_GDS_YN.keyword': 'Y'
-                    //     }
-                    // },
-                    {
-                        term: {
-                            'PRDCT_PUNSH_YN.keyword': 'N'
-                        }
-                    },
-                    {
-                        term: {
-                            'INV_CORP_PUNSH_YN.keyword': 'N'
-                        }
-                    }
-                ]
-            }
-        }
+const setSingleMatch = (fieldNm, value) => ({
+    match : {
+        [fieldNm]: value
+    }
+});
 
-        if (keyword) {
-            if (!searchOption) {
-                body.bool.must.push(setQueryString(keyword, 'MALL'));
-            } else if (searchOption === '01') { // 세부품명
-                body.bool.must.push({
-                    query_string: {
-                        query: keyword,
-                        fields: ['PRDCT_CLSFC_NM.keyword']
-                    }
-                });
-            } else if (searchOption === '02') { // 업체명
-                body.bool.must.push({
-                    query_string: {
-                        query: keyword,
-                        //fields: ['CORP_NM^70', 'CORP_NM.text_keyword^80', 'CORP_NM.kobrick^30', 'CORP_NM.standard^70']
-                        fields: ['CORP_NM.keyword']
-                    }
-                });
-            } else if (searchOption === '03') { // 물품식별번호
-                body.bool.must.push({
-                    query_string: {
-                        query: keyword,
-                        fields: ['GDS_IDNT_NO.keyword']
-                    }
-                });
-            } else if (searchOption === '04') { // 규격
-                body.bool.must.push({
-                    query_string: {
-                        query: keyword,
-                        fields: ['PRDCT_SPEC_NM.text_keyword^80', 'PRDCT_SPEC_NM.kobrick^50', 'PRDCT_SPEC_NM.standard^70']
-                    }
-                });
-            } else {
-                logger.error(`mall searchOption "${searchOption}" is invalid searchOption.`);
-                body.bool.must.push(setQueryString(keyword, 'MALL'));
-            }
-        } else {
-            body.bool.must.push(setMatchAll());
+const boolMustTemplate = () => ({
+    query : {
+        bool : {
+            must : {}
         }
-        return body;
+    },
+    highlight : HIGHLIGHT_BODY()
+});
+
+const setQueryString = (indexNm, keyword) => ({
+        query_string : {
+            query  : keyword,
+            fields : QUERY_STRING_FIELDS[indexNm]
+        }
+});
+
+const setAttValue = (obj, INDEX, queryArr) => {
+    let boolBody = boolMustTemplate();
+    boolBody.size = obj.size;
+    boolBody.from = obj.from;
+    boolBody._source = { includes: INCLUDE_FIELDS[INDEX] };
+    boolBody.query.bool.must = queryArr;
+    return boolBody;
+}
+
+const QUERY_BODY = {
+    /** 공지사항, 자료실, FAQ, QNA */
+    ARTI : (obj, INDEX) => {
+        return setAttValue(obj, INDEX, [setQueryString(INDEX, obj.keyword),
+            setSingleMatch('bod_id', obj.bod_id)])
+    },
+
+    /** 공공생산 인프라 관리 */
+    INFRA : (obj, INDEX) => {
+        return setAttValue(obj, INDEX,[setQueryString(INDEX, obj.keyword)]);
+    },
+
+    /** 조제 관리사 매칭 */
+    TPCO : (obj, INDEX) => {
+        return setAttValue(obj, INDEX,[setQueryString(INDEX, obj.keyword)]);
+    },
+
+    /** 제주 화장품 인증 관리 */
+    JCC : (obj, INDEX) => {
+        return setAttValue(obj, INDEX,[setQueryString(INDEX, obj.keyword)]);
     }
 }
 
+
+
+
 module.exports = {
-    QUERY_BODY,
-    HIGHLIGHT_BODY: () => ({
-        pre_tags: '<HS>',
-        post_tags: '</HS>',
-        fields: {
-            '*': {}
-        }
-    })
+    QUERY_BODY
 }

@@ -1,9 +1,10 @@
 const { Client } = require('@elastic/elasticsearch');
-const config = require('../../../config/config');
+const config = require('../../../config/config.json');
+const runMode = config.runMode;
 
 module.exports = {
     esClient: new Client({
-        node: config.ELASTICSEARCH_HOST,
-        requestTimeout: config.REQUEST_TIMEOUT
+        node: config[runMode].ELASTICSEARCH_HOST,
+        requestTimeout: config[runMode].REQUEST_TIMEOUT
     })
 };
