@@ -16,6 +16,17 @@ module.exports = {
         response: {}
     }),
 
+    getCountResult: () => ({
+       status: 500,
+        message: 'success',
+        validationErrors: [],
+        time: '',
+        request : {
+           keyword: ''
+        },
+        response: {}
+    }),
+
     getDetailApiResult: () => ({
         status: 200,
         message: 'success',

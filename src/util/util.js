@@ -7,7 +7,7 @@ const { esClient } = require('../module/esclient/index');
 module.exports = {
 
     search: (index, body) => esClient.search({index , body: body}),
-
+    msearch: (body) => esClient.msearch({body: body}),
     /**
      * 실행시간 계산
      * @param start (시작시간)

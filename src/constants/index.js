@@ -7,7 +7,7 @@ module.exports = {
     },
 
     INCLUDE_FIELDS: {
-        "jcop-arti": ["arti_id", "bod_id", "title", "cont", "reg_dtm"],
+        "jcop-arti": ["arti_id", "bod_id", "title", "cont", "reg_dtm", "bod_nm"],
         "jcop-infra": ["dev_cd", "dev_nm_ko", "dev_nm_en", "dev_desc", "img_id", "img_nm", "img_save_nm", "img_save_path"],
         "jcop-tpco": ["order_cd", "rcp_nm", "shape", "benefit", "image_file_id"],
         "jcop-jcc": ["cosName", "cosNameCn", "cosNameEn", "cos_typeNm", "cpName", "cosCert", "cosImg"]
@@ -33,6 +33,9 @@ module.exports = {
         "jcop-jcc": ["cosName", "cosNameCn", "cosNameEn", "cos_typeNm", "cpName"]
     },
 
+    BOD_IDS: {
+      NOTICE: ["5", "9", "13", "17", "21", "25"]
+    },
 
     TRACK_TOTAL_HITS: true,
 }
