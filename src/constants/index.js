@@ -3,7 +3,8 @@ module.exports = {
         ARTI: 'jcop-arti',
         INFRA: 'jcop-infra',
         TPCO: 'jcop-tpco',
-        JCC: 'jcop-jcc'
+        JCC: 'jcop-jcc',
+        MAT: ["jcop-biosp", "jcop-cmi", "jcop-tbh"]
     },
 
     INCLUDE_FIELDS: {
@@ -30,11 +31,10 @@ module.exports = {
         "jcop-arti": ["title", "cont"],
         "jcop-infra": ["dev_nm_ko", "dev_nm_en", "dev_desc"],
         "jcop-tpco": ["rcp_nm", "shape"],
-        "jcop-jcc": ["cosName", "cosNameCn", "cosNameEn", "cos_typeNm", "cpName"]
-    },
-
-    BOD_IDS: {
-      NOTICE: ["5", "9", "13", "17", "21", "25"]
+        "jcop-jcc": ["cosName", "cosNameCn", "cosNameEn", "cos_typeNm", "cpName"],
+        "jcop-biosp": ["jong_kor", "hak_nm", "biosp_group"],
+        "jcop-cmi": ["category", "func", "scntnm"],
+        "jcop-tbh": ["mtr_nm"]
     },
 
     TRACK_TOTAL_HITS: true,

@@ -55,15 +55,23 @@ const artiCount_BODY = (obj, INDEX) => {
 
 const QUERY_BODY = {
     /** 공지사항, 자료실, FAQ, QNA */
-    // ARTI : (obj, INDEX) => {
-    //     return setAttValue(obj, INDEX, [setQueryString(INDEX, obj.keyword),
-    //         setSingleMatch('bod_id', obj.bod_id)])
-    // },
-
     ARTI : (obj, INDEX) => {
         let query = setAttValue(obj, INDEX, [setQueryString(INDEX, obj.keyword)])
         query.aggs = {"num": {"terms": {"field": "bod_nm.keyword"}}}
         return query;
+    },
+
+    /** 화장품 원물 (jcop-biosp), 화장품 원료 (jcop-cmi), 제1 공장 원료 (jcop-tbh) => matInfo */
+    MATINFO : (obj, INDEX) => {
+        let a = [
+            {"index":"jcop-biosp"},
+            {"query":{"bool":{"must":[{"query_string":{"query":"파래","fields":["jong_kor.kobrick^10", "hak_nm.kobrick^10", "biosp_group.kobrick^10"]}}]}},"highlight":{"pre_tags":"<HS>","post_tags":"</HS>","fields":{"*":{}}}},
+            {"index":"jcop-cmi"},
+            {"query":{"bool":{"must":[{"query_string":{"query":"식물","fields":["category.kobrick^10", "func.kobrick^10", "scntnm.kobrick^10"]}}]}},"highlight":{"pre_tags":"<HS>","post_tags":"</HS>","fields":{"*":{}}}},
+            {"index":"jcop-tbh"},
+            {"query":{"bool":{"must":[{"query_string":{"query":"알루미늄","fields":["mtr_nm.kobrick^10"]}}]}},"highlight":{"pre_tags":"<HS>","post_tags":"</HS>","fields":{"*":{}}}}
+        ]
+        return a;
     },
 
     /** 공공생산 인프라 관리 */

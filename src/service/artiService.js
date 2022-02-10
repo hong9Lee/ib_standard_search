@@ -2,10 +2,9 @@ const { logger } = require('../module/logger');
 const utils = require('../util/util');
 const { INDEX_ALIAS } = require('../constants');
 const { sendOpenQueryLog } = require('../module/openquery');
-const { getApiResult, getCountResult } = require('../model/payload');
-const { setResponse, setReqObj, convertArtiRes } = require('../util/converter');
+const { getApiResult } = require('../model/payload');
+const { setReqObj, convertArtiRes } = require('../util/converter');
 const { QUERY_BODY } = require('../constants/query');
-const {start} = require("pm2");
 
 const INDEX = INDEX_ALIAS.ARTI;
 logger.info(`index => ${INDEX}`);
